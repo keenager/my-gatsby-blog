@@ -315,6 +315,12 @@ a:focus {
   margin: var(--spacing-0);
 }
 
+.blog-post-nav ul li {
+  border: solid lightsteelblue 1px;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
 .gatsby-highlight {
   margin-bottom: var(--spacing-8);
 }

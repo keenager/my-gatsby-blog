@@ -1,0 +1,60 @@
+---
+title: Make This Blog Better
+date: 2022-03-30
+description: 이 블로그를 개선해나가는 과정, Gatsby blog customizing
+tag: mdx, syntax highlighting
+---
+
+### 블로그 생성(2022-03-30)
+
+> 코로나로 격리된 지 5일째..
+
+1. *Gatsby Starter Blog*를 사용하여 생성
+1. 블로그 타이틀, 내 정보, 프로필 이미지 등 수정
+1. markdown 파일에 emoji 적용되게 plug-in 설치 :smile:
+1. 날짜 표시 형식 수정
+   - `frontmatter` 중에서 날짜 부분  
+      :arrow_right: `date(formatString: "LL", locale: "ko")`로 수정
+   - 작성일(posted) 외에 수정일(updated)도 추가  
+      다만 두 날짜가 같은 날이면 하나만 표시
+
+### 2022-03-31
+
+1. 포스트 하단 nav에 border 추가.  
+   첫 페이지일 때 이전 페이지 가리기, 마지막 페이지일 때 다음 페이지 가리기.
+1. mdx 적용
+   - mdx 플러그인 적용하여 mdx 파일 불러오기 성공
+   - 코드 스타일이 없어져서 Syntax Highlighting 적용...  
+      처음에는 [참조 블로그][ref1] 를 통해 prism react renderer 설치. `MDXProvider`는 `@mdx-js/react`에서 import 해야 함.  
+      그런데 mdx 공홈에서 제시하는 `react-syntax-highlighter`가 적용 과정이 더 간단함.  
+      [mdx 공홈 중 해당 부분][ref2]과 [깃헙][ref3]을 적절히 조합하여 성공. 코드는 아래에.  
+      [ref1]: https://choi-jinwoo.github.io/post/development/gatsby-syntax-highlight\
+      [ref2]: https://mdxjs.com/guides/syntax-highlighting/#syntax-highlighting-at-run-time
+      [ref3]: https://github.com/react-syntax-highlighter/react-syntax-highlighter#prism
+   - 인라인 블럭은 여전히 스타일 적용 안됨. 이모지도 적용이 안됨.
+
+```js
+import React from "react"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
+
+const CodeBlock = ({ children }) => {
+  const { className, ...props } = children.props
+  const match = /language-(\w+)/.exec(className || "")
+  return match ? (
+    <SyntaxHighlighter
+      language={match[1]}
+      style={oneDark}
+      PreTag="div"
+      {...props}
+    />
+  ) : (
+    <code className={className} {...props} />
+  )
+}
+
+export default CodeBlock
+```
+
+    앞으로 반영할 것들
+    코드 부분 스타일, 카테고리 분류, 댓글 기능, 반응형 디자인(이미 돼있나?), 다크 모드
