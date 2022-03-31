@@ -23,7 +23,12 @@ const BlogPostTemplate = ({ data, location }) => {
       >
         <header>
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
-          <p>{post.frontmatter.date}</p>
+          <p>
+            posted: {post.frontmatter.date}{" "}
+            {post.frontmatter.date === post.parent.modifiedTime
+              ? ``
+              : `, updated: ${post.parent.modifiedTime}`}
+          </p>
         </header>
         <section
           dangerouslySetInnerHTML={{ __html: post.html }}
@@ -83,8 +88,13 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
+        date(formatString: "LL", locale: "ko")
         description
+      }
+      parent {
+        ... on File {
+          modifiedTime(formatString: "LL", locale: "ko")
+        }
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {

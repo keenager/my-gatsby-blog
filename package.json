@@ -18,6 +18,7 @@
     "gatsby-plugin-react-helmet": "^5.11.0",
     "gatsby-plugin-sharp": "^4.11.0",
     "gatsby-remark-copy-linked-files": "^5.11.0",
+    "gatsby-remark-emojis": "^0.4.3",
     "gatsby-remark-images": "^6.11.0",
     "gatsby-remark-prismjs": "^6.11.0",
     "gatsby-remark-responsive-iframe": "^5.11.0",
