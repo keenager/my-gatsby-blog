@@ -13,7 +13,9 @@ const CodeBlock = ({ children }) => {
       {...props}
     />
   ) : (
-    <code className={className} {...props} />
+    <pre className="language-text">
+      <code {...props} />
+    </pre>
   )
 }
 

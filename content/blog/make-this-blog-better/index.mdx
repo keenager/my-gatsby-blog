@@ -2,8 +2,12 @@
 title: Make This Blog Better
 date: 2022-03-30
 description: 이 블로그를 개선해나가는 과정, Gatsby blog customizing
-tag: mdx, syntax highlighting
+tag: mdx syntax highlighting highlighter code block
 ---
+
+```toc
+
+```
 
 ### 블로그 생성(2022-03-30)
 
@@ -18,7 +22,7 @@ tag: mdx, syntax highlighting
    - 작성일(posted) 외에 수정일(updated)도 추가  
       다만 두 날짜가 같은 날이면 하나만 표시
 
-### 2022-03-31
+### 하단 nav, mdx 적용(2022-03-31)
 
 1. 포스트 하단 nav에 border 추가.  
    첫 페이지일 때 이전 페이지 가리기, 마지막 페이지일 때 다음 페이지 가리기.
@@ -29,9 +33,10 @@ tag: mdx, syntax highlighting
       그런데 mdx 공홈에서 제시하는 `react-syntax-highlighter`가 적용 과정이 더 간단함.  
       [mdx 공홈 중 해당 부분][ref2]과 [깃헙][ref3]을 적절히 조합하여 성공. 코드는 아래에.  
       [ref1]: https://choi-jinwoo.github.io/post/development/gatsby-syntax-highlight\
-      [ref2]: https://mdxjs.com/guides/syntax-highlighting/#syntax-highlighting-at-run-time
-      [ref3]: https://github.com/react-syntax-highlighter/react-syntax-highlighter#prism
-   - 인라인 블럭은 여전히 스타일 적용 안됨. 이모지도 적용이 안됨.
+     [ref2]: https://mdxjs.com/guides/syntax-highlighting/#syntax-highlighting-at-run-time
+     [ref3]: https://github.com/react-syntax-highlighter/react-syntax-highlighter#prism
+   - 인라인 코드 블럭 스타일도 적용. 역시 코드는 아래에.
+   - 이모지는 아직 안됨.
 
 ```js
 import React from "react"
@@ -49,12 +54,60 @@ const CodeBlock = ({ children }) => {
       {...props}
     />
   ) : (
-    <code className={className} {...props} />
+    <pre className="language-text">
+      <code {...props} />
+    </pre>
   )
 }
 
 export default CodeBlock
 ```
 
+```css
+`src/normalize.css` :not(pre) > code {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 0.85em;
+  color: #c7254e;
+}
+```
+
+### 목차 추가(2022-04-01)
+
+1. 설치
+    - [`gatsby-remark-autolink-headers`](https://www.gatsbyjs.com/plugins/gatsby-remark-table-of-contents/) 플러그인 설치.  
+      그 과정에서 `gatsby-remark-autolink-headers` 플러그인도 함께 설치.  
+      remark 플러그인이지만 mdx 파일에도 호환됨. [gatsby 공홈][link migrate]에도 다음과 같이 기재되어 있음.
+      [link migrate]: https://www.gatsbyjs.com/docs/how-to/routing/migrate-remark-to-mdx/#replacing-gatsby-transformer-remark-with-gatsby-plugin-mdx
+      > Most sub-plugins of gatsby-transformer-remark can still work with gatsby-plugin-mdx by updating the plugins option to gatsbyRemarkPlugins.
+1. style
+    - `position: fixed;` → *요소를 일반적인 문서 흐름에서 제거한다.* 자세한 내용은 [MDN](https://developer.mozilla.org/ko/docs/Web/CSS/position) 참조.
+    - 다만 `@media`를 통해 일정 크기 이하에서는 `position: static;`  
+      이때 `width`는 `max-content`, `max-width`는 상황에 따라 계산한 값을 지정함.
+    - 목차가 많아질 경우 목차 div가 화면 아래로 내려가면서 일부가 보이지 않는 문제 발생 → `max-height`를 설정하여 높이 제한을 준 뒤 `overflow: scroll;`로 스크롤 기능을 추가하여 해결.
+    - 아직 스타일이 그리 예쁘진 않지만 그럭저럭...😀 나중에 조금씩 고쳐봐야겠다. MDN 홈페이지 우측 목차 스타일이 괜찮은 듯..
+```css
+.table-of-contents {
+  width: max-content;
+  max-width: calc((100vw - var(--maxWidth-wrapper)) / 2);
+  max-height: 40vh;
+  /* 중략 */
+  position: fixed;
+  top: 30vh;
+  right: 1vw;
+  overflow: scroll;
+}
+@media (max-width: 950px) {
+  .table-of-contents {
+    position: static;
+    width: max-content;
+    max-width: var(--maxWidth-wrapper);
+  }
+}
+```
+
+---
+
     앞으로 반영할 것들
-    코드 부분 스타일, 카테고리 분류, 댓글 기능, 반응형 디자인(이미 돼있나?), 다크 모드
+    :emoji:, 카테고리 분류, 댓글 기능, 반응형 디자인(이미 돼있나?), 다크 모드

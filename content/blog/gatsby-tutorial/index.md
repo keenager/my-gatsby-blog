@@ -4,6 +4,9 @@ date: '2022-03-28'
 description: gatsby tutorial을 따라가면서 주요 부분을 요약.
 ---
 
+```toc
+```
+
 # Gatsby tutorial 요약
 ## 4. Query for Data with GraphQL
 - Source plugins pull data from their original location into the Gatsby GraphQL data layer.
@@ -53,10 +56,3 @@ query MyQuery($id: String) {
 pages/blog를 단순화하고 blog/주제/index.mdx 로 바꿔보자...  
 다만 index.mdx에서 graphql 방법을 찾아야...  그래야 해당 주제 글 리스트를 보여줄 수 있음.  
 mdx.slug.js에서는 삼항 연산자 사용하여 category에 따라 다르게 출력
-
-
-
-
-```toc 
-
-```

@@ -109,6 +109,14 @@ samp {
   font-size: 1em; /* 2 */
 }
 
+:not(pre) > code {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 0.9em;
+  color: #c7254e;
+}
+
 /**
  * Add the correct font size in all browsers.
  */
