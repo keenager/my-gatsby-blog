@@ -56,7 +56,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === `MarkdownRemark`) {
+  // if (node.internal.type === `MarkdownRemark`) {
+  if (node.internal.type === `Mdx`) {
     const value = createFilePath({ node, getNode })
 
     createNodeField({
@@ -92,9 +93,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       twitter: String
     }
 
-    type MarkdownRemark implements Node {
+    type Mdx implements Node {
       frontmatter: Frontmatter
-      fields: Fields
+      slug: String
     }
 
     type Frontmatter {
@@ -102,9 +103,14 @@ exports.createSchemaCustomization = ({ actions }) => {
       description: String
       date: Date @dateformat
     }
-
-    type Fields {
-      slug: String
-    }
   `)
 }
+
+// type MarkdownRemark implements Node {
+//   frontmatter: Frontmatter
+//   fields: Fields
+// }
+
+// type Fields {
+//   slug: String
+// }
