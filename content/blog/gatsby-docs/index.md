@@ -4,6 +4,8 @@ date: "2022-03-29"
 description: Gatsby 공식 문서 중 참조할 만한 부분 링크 모음
 ---
 
+:smile:
+
 ### Graphql 관련
 
 [Graphql Query Options](https://www.gatsbyjs.com/docs/graphql-reference/)
@@ -36,3 +38,5 @@ export const query = graphql`
   }
 `
 ```
+### Migrating Remark to MDX
+[link](https://www.gatsbyjs.com/docs/how-to/routing/migrate-remark-to-mdx/)

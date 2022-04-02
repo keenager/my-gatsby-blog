@@ -5,8 +5,6 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import { MDXRenderer } from "gatsby-plugin-mdx"
-import { MDXProvider } from "@mdx-js/react"
-import CodeBlock from "../components/code-block"
 
 const BlogPostTemplate = ({ data, location }) => {
   const post = data.mdx
@@ -37,13 +35,7 @@ const BlogPostTemplate = ({ data, location }) => {
           itemProp="articleBody"
         /> */}
         <section itemProp="articleBody">
-          <MDXProvider
-            components={{
-              pre: CodeBlock,
-            }}
-          >
             <MDXRenderer>{post.body}</MDXRenderer>
-          </MDXProvider>
         </section>
         <hr />
         <footer>

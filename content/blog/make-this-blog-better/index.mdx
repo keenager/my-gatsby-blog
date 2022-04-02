@@ -28,65 +28,31 @@ tag: mdx syntax highlighting highlighter code block
    첫 페이지일 때 이전 페이지 가리기, 마지막 페이지일 때 다음 페이지 가리기.
 1. mdx 적용
    - mdx 플러그인 적용하여 mdx 파일 불러오기 성공
-   - 코드 스타일이 없어져서 Syntax Highlighting 적용...  
+   - ~~코드 스타일이 없어져서 Syntax Highlighting 적용...  
       처음에는 [참조 블로그][ref1] 를 통해 prism react renderer 설치. `MDXProvider`는 `@mdx-js/react`에서 import 해야 함.  
       그런데 mdx 공홈에서 제시하는 `react-syntax-highlighter`가 적용 과정이 더 간단함.  
-      [mdx 공홈 중 해당 부분][ref2]과 [깃헙][ref3]을 적절히 조합하여 성공. 코드는 아래에.  
+      [mdx 공홈 중 해당 부분][ref2]과 [깃헙][ref3]을 적절히 조합하여 성공. 코드는 아래에.~~  
       [ref1]: https://choi-jinwoo.github.io/post/development/gatsby-syntax-highlight\
      [ref2]: https://mdxjs.com/guides/syntax-highlighting/#syntax-highlighting-at-run-time
      [ref3]: https://github.com/react-syntax-highlighter/react-syntax-highlighter#prism
-   - 인라인 코드 블럭 스타일도 적용. 역시 코드는 아래에.
+   - 취소 이유는 [아래 4/2 참조](/make-this-blog-better#syntax-highlight-드디어-해결2022-04-02)
    - 이모지는 아직 안됨.
-
-```js
-import React from "react"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
-
-const CodeBlock = ({ children }) => {
-  const { className, ...props } = children.props
-  const match = /language-(\w+)/.exec(className || "")
-  return match ? (
-    <SyntaxHighlighter
-      language={match[1]}
-      style={oneDark}
-      PreTag="div"
-      {...props}
-    />
-  ) : (
-    <pre className="language-text">
-      <code {...props} />
-    </pre>
-  )
-}
-
-export default CodeBlock
-```
-
-```css
-`src/normalize.css` :not(pre) > code {
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
-  padding: 2px 4px;
-  font-size: 0.85em;
-  color: #c7254e;
-}
-```
 
 ### 목차 추가(2022-04-01)
 
 1. 설치
-    - [`gatsby-remark-autolink-headers`](https://www.gatsbyjs.com/plugins/gatsby-remark-table-of-contents/) 플러그인 설치.  
-      그 과정에서 `gatsby-remark-autolink-headers` 플러그인도 함께 설치.  
-      remark 플러그인이지만 mdx 파일에도 호환됨. [gatsby 공홈][link migrate]에도 다음과 같이 기재되어 있음.
-      [link migrate]: https://www.gatsbyjs.com/docs/how-to/routing/migrate-remark-to-mdx/#replacing-gatsby-transformer-remark-with-gatsby-plugin-mdx
-      > Most sub-plugins of gatsby-transformer-remark can still work with gatsby-plugin-mdx by updating the plugins option to gatsbyRemarkPlugins.
+   - [`gatsby-remark-autolink-headers`](https://www.gatsbyjs.com/plugins/gatsby-remark-table-of-contents/) 플러그인 설치.  
+     그 과정에서 `gatsby-remark-autolink-headers` 플러그인도 함께 설치.  
+     remark 플러그인이지만 mdx 파일에도 호환됨. [gatsby 공홈][link migrate]에도 다음과 같이 기재되어 있음.
+     [link migrate]: https://www.gatsbyjs.com/docs/how-to/routing/migrate-remark-to-mdx/#replacing-gatsby-transformer-remark-with-gatsby-plugin-mdx
+     > Most sub-plugins of gatsby-transformer-remark can still work with gatsby-plugin-mdx by updating the plugins option to gatsbyRemarkPlugins.
 1. style
-    - `position: fixed;` → *요소를 일반적인 문서 흐름에서 제거한다.* 자세한 내용은 [MDN](https://developer.mozilla.org/ko/docs/Web/CSS/position) 참조.
-    - 다만 `@media`를 통해 일정 크기 이하에서는 `position: static;`  
-      이때 `width`는 `max-content`, `max-width`는 상황에 따라 계산한 값을 지정함.
-    - 목차가 많아질 경우 목차 div가 화면 아래로 내려가면서 일부가 보이지 않는 문제 발생 → `max-height`를 설정하여 높이 제한을 준 뒤 `overflow: scroll;`로 스크롤 기능을 추가하여 해결.
-    - 아직 스타일이 그리 예쁘진 않지만 그럭저럭...😀 나중에 조금씩 고쳐봐야겠다. MDN 홈페이지 우측 목차 스타일이 괜찮은 듯..
+   - `position: fixed;` → _요소를 일반적인 문서 흐름에서 제거한다._ 자세한 내용은 [MDN](https://developer.mozilla.org/ko/docs/Web/CSS/position) 참조.
+   - 다만 `@media`를 통해 일정 크기 이하에서는 `position: static;`  
+     이때 `width`는 `max-content`, `max-width`는 상황에 따라 계산한 값을 지정함.
+   - 목차가 많아질 경우 목차 div가 화면 아래로 내려가면서 일부가 보이지 않는 문제 발생 → `max-height`를 설정하여 높이 제한을 준 뒤 `overflow: scroll;`로 스크롤 기능을 추가하여 해결.
+   - 아직 스타일이 그리 예쁘진 않지만 그럭저럭...😀 나중에 조금씩 고쳐봐야겠다. MDN 홈페이지 우측 목차 스타일이 괜찮은 듯..
+
 ```css
 .table-of-contents {
   width: max-content;
@@ -107,6 +73,53 @@ export default CodeBlock
 }
 ```
 
+### Syntax Highlight 드디어 해결...(2022-04-02)
+
+3/31자 mdx 부분을 수정하던 도중 에러 발생. 이걸로 삽질한 시간을 생각하면...ㅠㅠ  
+4/1자에서 언급한 remark → mdx (migration)을 통해 생각보다 간단히 해결되었다.
+
+```js
+// gatsby-node.js
+
+{
+  resolve: `gatsby-plugin-mdx`,
+  options: {
+    extensions: [`.mdx`, `.md`],
+    gatsbyRemarkPlugins: [
+      `gatsby-remark-prismjs`,
+    ]
+  }
+}
+```
+prism 테마 css 파일을 내 입맛에 맞게 수정하기 위해 
+`/node_modules/prismjs/themes/{테마 이름}.css` 파일을 적절한 위치에 복사한 다음  
+아래와 같이 수정.
+
+```css
+/* Text blocks */
+pre[class="language-text"] {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+pre > code[class="language-text"] {
+  color: black;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #c7254e;
+  padding: 0.1em;
+  border-radius: 0.3em;
+  font-size: 0.9em;
+  white-space: normal;
+}
+```
+그리고 아래와 같이 테마를 불러옴.
+```js
+// gatsby-browser.js
+
+require("./src/{내가 바꾼 파일명}.css")
+```
 ---
 
     앞으로 반영할 것들

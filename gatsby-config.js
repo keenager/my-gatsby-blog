@@ -13,7 +13,6 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-image`,
-    `gatsby-remark-emojis`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -62,13 +61,14 @@ module.exports = {
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
-          {
-            resolve: `gatsby-remark-emojis`,
-            options: {
-              active: true,
-              size: 24,
-            },
-          },
+          // `gatsby-remark-emoji`,
+          // {
+          //   resolve: `gatsby-remark-emojis`,
+          //   options: {
+          //     active: true,
+          //     size: 24,
+          //   },
+          // },
         ],
       },
     },
@@ -97,28 +97,26 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.nodes.map(node => {
+            serialize: ({ query: { site, allMdx } }) => {
+              return allMdx.nodes.map(node => {
                 return Object.assign({}, node.frontmatter, {
                   description: node.excerpt,
                   date: node.frontmatter.date,
-                  url: site.siteMetadata.siteUrl + node.fields.slug,
-                  guid: site.siteMetadata.siteUrl + node.fields.slug,
-                  custom_elements: [{ "content:encoded": node.html }],
+                  url: site.siteMetadata.siteUrl + node.slug,
+                  guid: site.siteMetadata.siteUrl + node.slug,
+                  custom_elements: [{ "content:encoded": node.body }],
                 })
               })
             },
             query: `
               {
-                allMarkdownRemark(
+                allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] },
                 ) {
                   nodes {
                     excerpt
-                    html
-                    fields {
-                      slug
-                    }
+                    body
+                    slug
                     frontmatter {
                       title
                       date
@@ -128,7 +126,7 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "Gatsby Starter Blog RSS Feed",
+            title: "My Gatsby Blog RSS Feed",
           },
         ],
       },
@@ -136,7 +134,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
+        name: `My Gatsby Blog`,
         short_name: `GatsbyJS`,
         start_url: `/`,
         background_color: `#ffffff`,
