@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useState } from "react"
 import { Link, graphql } from "gatsby"
 
 import Bio from "../components/bio"
@@ -8,6 +9,7 @@ import Seo from "../components/seo"
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const posts = data.allMdx.nodes
+  const [category, setCategory] = useState("all")
 
   if (posts.length === 0) {
     return (
@@ -23,15 +25,48 @@ const BlogIndex = ({ data, location }) => {
     )
   }
 
+  let categorySet = new Set()
+  const separator = /\s*,\s*/
+  for (let post of posts) {
+    if (post.frontmatter.category) {
+      let splittedCats = post.frontmatter.category.split(separator)
+      for (let split of splittedCats) {
+        categorySet.add(split)
+      }
+    }
+  }
+  categorySet.delete("")
+  let categories = [...categorySet]
+  categories.push("all")
+  categories.sort()
+
+  const handleCategory = event => {
+    setCategory(event.target.innerText)
+  }
+
   return (
     <Layout location={location} title={siteTitle}>
       <Seo title="All posts" />
       <Bio />
+      <div className="category-list">
+        {categories.map((category, index) => {
+          return (
+            <button
+              key={index}
+              className="category-list-item"
+              onClick={handleCategory}
+            >
+              {category}
+            </button>
+          )
+        })}
+      </div>
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.frontmatter.title || post.slug
 
-          return (
+          return category === "all" ||
+            post.frontmatter.category?.includes(category) ? (
             <li key={post.slug}>
               <article
                 className="post-list-item"
@@ -56,7 +91,7 @@ const BlogIndex = ({ data, location }) => {
                 </section>
               </article>
             </li>
-          )
+          ) : null
         })}
       </ol>
     </Layout>
@@ -80,6 +115,7 @@ export const pageQuery = graphql`
           title
           date(locale: "ko", formatString: "LL")
           description
+          category
         }
       }
     }

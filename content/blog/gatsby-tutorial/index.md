@@ -2,6 +2,7 @@
 title: gatsby tutorial 중 메모
 date: '2022-03-28'
 description: gatsby tutorial을 따라가면서 주요 부분을 요약.
+category: gatsby
 ---
 
 ```toc

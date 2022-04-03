@@ -2,7 +2,8 @@
 title: Make This Blog Better
 date: 2022-03-30
 description: 이 블로그를 개선해나가는 과정, Gatsby blog customizing
-tag: mdx syntax highlighting highlighter code block
+category: gatsby,
+tag: mdx, syntax highlighting, syntax highlighter, code block
 ---
 
 ```toc
@@ -41,7 +42,7 @@ tag: mdx syntax highlighting highlighter code block
 ### 목차 추가(2022-04-01)
 
 1. 설치
-   - [`gatsby-remark-autolink-headers`](https://www.gatsbyjs.com/plugins/gatsby-remark-table-of-contents/) 플러그인 설치.  
+   - [`gatsby-remark-table-of-contents`](https://www.gatsbyjs.com/plugins/gatsby-remark-table-of-contents/) 플러그인 설치.  
      그 과정에서 `gatsby-remark-autolink-headers` 플러그인도 함께 설치.  
      remark 플러그인이지만 mdx 파일에도 호환됨. [gatsby 공홈][link migrate]에도 다음과 같이 기재되어 있음.
      [link migrate]: https://www.gatsbyjs.com/docs/how-to/routing/migrate-remark-to-mdx/#replacing-gatsby-transformer-remark-with-gatsby-plugin-mdx
@@ -120,7 +121,19 @@ pre > code[class="language-text"] {
 
 require("./src/{내가 바꾼 파일명}.css")
 ```
+
+### 카테고리 분류 기능 추가(2022-04-03)
+
+1. deploy 사이트 변경  
+    - 원래 tutorial에서부터 이용했었던 gatsby cloud를 통해 배포했었는데, image(아바타 이미지, 마크다운 문서 내 이미지)가 불러와지지 않는 문제점 확인.  
+    - develop 단계에서는 잘 보이는데 build 하고 나서는 안 보임.
+    - 플러그인이나 `StaticImage` 컴포넌트 옵션 등 원인을 찾아보려 했지만... 해결하지 못함.  
+    - 그런데, 혹시나 해서 netlify에서 빌드 및 배포해보니 잘 나타남...😕
+1. 카테고리 분류 기능 추가
+    - javascript의 `Set`, `Array`, react의 `useState` 이용.  
+    - 스타일은 나중에 개선...
+
 ---
 
     앞으로 반영할 것들
-    :emoji:, 카테고리 분류, 댓글 기능, 반응형 디자인(이미 돼있나?), 다크 모드
+    :emoji:, 목차와 카테고리 스타일, 댓글 기능, 다크 모드
