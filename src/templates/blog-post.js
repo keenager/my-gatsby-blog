@@ -1,15 +1,16 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
-
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import { MDXRenderer } from "gatsby-plugin-mdx"
+import { Disqus } from "gatsby-plugin-disqus"
 
 const BlogPostTemplate = ({ data, location }) => {
   const post = data.mdx
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
+
   return (
     <Layout location={location} title={siteTitle}>
       <Seo
@@ -35,7 +36,7 @@ const BlogPostTemplate = ({ data, location }) => {
           itemProp="articleBody"
         /> */}
         <section itemProp="articleBody">
-            <MDXRenderer>{post.body}</MDXRenderer>
+          <MDXRenderer>{post.body}</MDXRenderer>
         </section>
         <hr />
         <footer>
@@ -68,6 +69,7 @@ const BlogPostTemplate = ({ data, location }) => {
           </li>
         </ul>
       </nav>
+      <Disqus config={{ identifier: post.id, title: post.frontmatter.title }} />
     </Layout>
   )
 }

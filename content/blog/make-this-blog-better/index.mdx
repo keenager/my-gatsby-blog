@@ -33,9 +33,9 @@ tag: mdx, syntax highlighting, syntax highlighter, code block
       처음에는 [참조 블로그][ref1] 를 통해 prism react renderer 설치. `MDXProvider`는 `@mdx-js/react`에서 import 해야 함.  
       그런데 mdx 공홈에서 제시하는 `react-syntax-highlighter`가 적용 과정이 더 간단함.  
       [mdx 공홈 중 해당 부분][ref2]과 [깃헙][ref3]을 적절히 조합하여 성공. 코드는 아래에.~~  
-      [ref1]: https://choi-jinwoo.github.io/post/development/gatsby-syntax-highlight\
-     [ref2]: https://mdxjs.com/guides/syntax-highlighting/#syntax-highlighting-at-run-time
-     [ref3]: https://github.com/react-syntax-highlighter/react-syntax-highlighter#prism
+      [ref1]: https://choi-jinwoo.github.io/post/development/gatsby-syntax-highlight
+      [ref2]: https://mdxjs.com/guides/syntax-highlighting/#syntax-highlighting-at-run-time
+      [ref3]: https://github.com/react-syntax-highlighter/react-syntax-highlighter#prism
    - 취소 이유는 [아래 4/2 참조](/make-this-blog-better#syntax-highlight-드디어-해결2022-04-02)
    - 이모지는 아직 안됨.
 
@@ -69,7 +69,7 @@ tag: mdx, syntax highlighting, syntax highlighter, code block
   .table-of-contents {
     position: static;
     width: max-content;
-    max-width: var(--maxWidth-wrapper);
+    max-width: 100%;
   }
 }
 ```
@@ -129,11 +129,20 @@ require("./src/{내가 바꾼 파일명}.css")
     - develop 단계에서는 잘 보이는데 build 하고 나서는 안 보임.
     - 플러그인이나 `StaticImage` 컴포넌트 옵션 등 원인을 찾아보려 했지만... 해결하지 못함.  
     - 그런데, 혹시나 해서 netlify에서 빌드 및 배포해보니 잘 나타남...😕
+    - **해결** gatsby cloud 사이트의 문제였다. [gatsby status](https://status.gatsbyjs.com)에 가보니 2022.4.1.에 *Newly created sites contain images returning errors 503s* 라는 이슈가 생겼고 그날 해결했다고 나온다.
+    - gatsby cloud에서 다시 빌드 및 배포해보니 잘 된다! 😀
 1. 카테고리 분류 기능 추가
     - javascript의 `Set`, `Array`, react의 `useState` 이용.  
     - 스타일은 나중에 개선...
 
+### 댓글 기능 추가(2022-04-07)
+
+1. Disqus
+    - gatsby의 [Adding Comments](https://www.gatsbyjs.com/docs/how-to/adding-common-features/adding-comments/)에서 추천한 Disqus를 설치. 
+    - 다만 Disqus 홈페이지에서 안내하는 설치 방식과 달랐다. 아무래도 Disqus 홈페이지에 있는 것이 최신일 것으로 보여서 이쪽 방식을 따랐다.
+    - 예전에 블로그 글을 읽다보니 Disqus가 무겁고 광고가 많이 나와 별로라며 utterance를 추천하는 글이 있던데... 아직은 광고가 안보인다.. 일단 좀 사용해보다가 별로면 바꾸든지 해야겠다.
+
 ---
 
     앞으로 반영할 것들
-    :emoji:, 목차와 카테고리 스타일, 댓글 기능, 다크 모드
+    :emoji:, 목차와 카테고리 스타일, 다크 모드
